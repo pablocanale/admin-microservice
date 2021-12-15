@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { ProductService } from './product.service';
 
 @Controller('products')
 export class ProductController {
 
-    constructor(private productService: ProductService) { }
+    constructor(private productService: ProductService,
+        @Inject('PRODUCT_SERVICE') private readonly client: ClientProxy
+    ) { }
 
     @Get()
     async all() {
